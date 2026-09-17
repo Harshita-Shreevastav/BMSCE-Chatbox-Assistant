@@ -33,7 +33,7 @@ Rather than relying purely on generative AI hallucinations, the assistant utiliz
   - Left navigation & quick topic filters
   - Main interactive conversation feed
   - Right sidebar with campus widgets, shortcuts, and trust distribution meter
-- **⌨️ Power-User Shortcuts**:
+- ** Power-User Shortcuts**:
   - `Ctrl + K`: Quick focus chat bar
   - `Ctrl + N`: New chat session
   - `Ctrl + E`: Export conversation to `.txt`
