@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BMSCE Campus Assistant - BMS College of Engineering</title>
+    <meta name="description" content="AI-powered campus assistant for BMS College of Engineering, Bangalore.">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="app-layout">
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar-left">
+            <div class="logo-section">
+                <div class="logo-icon">BMS</div>
+                <div class="logo-text"><h2>BMSCE</h2><span>Campus Assistant</span></div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active"><span class="icon">&#127968;</span> Dashboard</li>
+                <li class="nav-item"><span class="icon">&#10067;</span> Ask Something</li>
+                <li class="nav-item"><span class="icon">&#128218;</span> Knowledge Base</li>
+                <li class="nav-item"><span class="icon">&#9881;</span> About</li>
+            </ul>
+            <div class="sidebar-section">
+                <h4>Trust Guide</h4>
+                <div class="trust-guide-item"><span class="trust-dot" style="background:var(--trust-1)"></span>Official College Data</div>
+                <div class="trust-guide-item"><span class="trust-dot" style="background:var(--trust-2)"></span>Verified Student Reviews</div>
+                <div class="trust-guide-item"><span class="trust-dot" style="background:var(--trust-3)"></span>Student Opinion (Subjective)</div>
+                <div class="trust-meter">
+                    <div class="meter-bar"><div class="meter-fill" id="trustMeterFill"></div></div>
+                    <div class="meter-label"><span id="trustMeterPct">0% Official</span><span>Session</span></div>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <h4>Quick Stats</h4>
+                <div class="stats-card">
+                    <div class="stat-row"><span class="label">Queries answered</span><span class="value" id="statQueries">0</span></div>
+                    <div class="stat-row"><span class="label">Topics covered</span><span class="value">11</span></div>
+                    <div class="stat-row"><span class="label">Data entries</span><span class="value">20+</span></div>
+                </div>
+            </div>
+            <div class="theme-toggle"><span>Dark Mode</span><div class="toggle-switch active" id="themeToggle"></div></div>
+        </aside>
+
+        <div class="col-resizer" id="resizerLeft"></div>
+
+        <!-- MAIN CHAT -->
+        <main class="main-chat">
+            <div class="chat-tabs" id="tabBar"></div>
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <h1>BMSCE Campus Assistant</h1>
+                    <div class="header-status"><span class="status-dot-live"></span><p>Online &mdash; Powered by BMSCE Knowledge Base</p></div>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="toggleSearch()" title="Search in chat"><span>&#128269;</span> Search <kbd>Ctrl+F</kbd></button>
+                    <button class="header-btn" onclick="exportChat()" title="Export conversation"><span>&#128190;</span> Export <kbd>Ctrl+E</kbd></button>
+                </div>
+            </div>
+            <div class="search-overlay" id="searchOverlay">
+                <input type="text" id="searchInput" placeholder="Search in conversation...">
+                <span class="search-count" id="searchCount"></span>
+                <button onclick="closeSearch()" title="Close">&times;</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-container">
+                    <div class="welcome-emoji">&#127963;</div>
+                    <h2>Welcome to BMSCE Campus Assistant</h2>
+                    <p>Ask me anything about BMS College of Engineering &mdash; clubs, canteen, placements, hostels, attendance, fests, sports, and campus life.</p>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <span class="drop-zone-text">Drop .txt file here</span>
+                    <span class="drop-zone-sub">File contents will be previewed in chat</span>
+                </div>
+                <button class="scroll-bottom-btn" id="scrollBtn" onclick="scrollToBottom()" title="Scroll to bottom">&#8595;</button>
+            </div>
+            <div class="suggestions">
+                <button class="suggest-pill" onclick="askQuick('Best clubs in BMSCE?')">&#127942; Best Clubs</button>
+                <button class="suggest-pill" onclick="askQuick('Canteen timings and prices')">&#127869; Canteen</button>
+                <button class="suggest-pill" onclick="askQuick('CSE placement packages')">&#128188; Placements</button>
+                <button class="suggest-pill" onclick="askQuick('Attendance policy')">&#128203; Attendance</button>
+                <button class="suggest-pill" onclick="askQuick('Utsav vs Phase Shift')">&#127881; Fests</button>
+                <button class="suggest-pill" onclick="askQuick('Library timings during exams')">&#128218; Library</button>
+                <button class="suggest-pill" onclick="askQuick('Gym and sports facilities')">&#127947; Sports</button>
+                <button class="suggest-pill" onclick="askQuick('Hostel food quality')">&#127968; Hostels</button>
+            </div>
+            <div class="input-area">
+                <div class="input-box">
+                    <textarea id="userInput" rows="1" placeholder="Ask about BMSCE..."></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send message">&#10148;</button>
+                </div>
+                <div class="input-hint">
+                    <kbd>Enter</kbd> send &nbsp; <kbd>Shift+Enter</kbd> new line &nbsp; <kbd>Ctrl+K</kbd> focus &nbsp; <kbd>Ctrl+&uarr;&darr;</kbd> history
+                </div>
+            </div>
+        </main>
+
+        <div class="col-resizer" id="resizerRight"></div>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="sidebar-right">
+            <div class="right-section">
+                <h4>Popular Questions</h4>
+                <div class="popular-q">
+                    <div class="pop-q-item" data-q="Which is the best club?" onclick="askQuick('Which is the best club?')"><span>Which is the best club?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Can I wear shorts to college?" onclick="askQuick('Can I wear shorts to college?')"><span>Can I wear shorts to college?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Are teachers strict about attendance?" onclick="askQuick('Are teachers strict about attendance?')"><span>Are teachers strict?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Can I change my branch after first year?" onclick="askQuick('Can I change my branch after first year?')"><span>Can I change branch?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Is the swimming pool open on weekends?" onclick="askQuick('Is the swimming pool open on weekends?')"><span>Pool open on weekends?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Which hostel has the best food?" onclick="askQuick('Which hostel has the best food?')"><span>Best hostel food?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Hidden hangout spots on campus" onclick="askQuick('Hidden hangout spots on campus')"><span>Hidden hangout spots?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Girls to boys ratio" onclick="askQuick('Girls to boys ratio')"><span>Girls to boys ratio?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="Is there a gym?" onclick="askQuick('Is there a gym?')"><span>Is there a gym?</span><span class="pop-q-count">0</span></div>
+                    <div class="pop-q-item" data-q="How to get admission in BMSCE?" onclick="askQuick('How to get admission in BMSCE?')"><span>How to get admission?</span><span class="pop-q-count">0</span></div>
+                </div>
+            </div>
+            <div class="right-section">
+                <h4>Trending Topics</h4>
+                <div class="trend-bar-row"><span class="trend-label">Placements</span><div class="trend-bar-bg"><div class="trend-bar-fill" data-width="92%" style="width:0"></div></div></div>
+                <div class="trend-bar-row"><span class="trend-label">Clubs</span><div class="trend-bar-bg"><div class="trend-bar-fill" data-width="78%" style="width:0"></div></div></div>
+                <div class="trend-bar-row"><span class="trend-label">Canteen</span><div class="trend-bar-bg"><div class="trend-bar-fill" data-width="65%" style="width:0"></div></div></div>
+                <div class="trend-bar-row"><span class="trend-label">Attendance</span><div class="trend-bar-bg"><div class="trend-bar-fill" data-width="58%" style="width:0"></div></div></div>
+                <div class="trend-bar-row"><span class="trend-label">Hostels</span><div class="trend-bar-bg"><div class="trend-bar-fill" data-width="45%" style="width:0"></div></div></div>
+            </div>
+            <div class="right-section">
+                <h4>Campus Updates</h4>
+                <div class="update-card"><div class="update-title">&#127881; Utsav 2026 Registrations Open</div><div class="update-sub">Cultural fest &mdash; March 20-22</div></div>
+                <div class="update-card"><div class="update-title">&#128218; Library Extended Hours</div><div class="update-sub">Open till 11 PM during exam season</div></div>
+                <div class="update-card"><div class="update-title">&#128187; Phase Shift Hackathon</div><div class="update-sub">Register by Oct 15 for 48hr hackathon</div></div>
+            </div>
+            <div class="right-section">
+                <h4>Keyboard Shortcuts</h4>
+                <div class="shortcut-row"><span>Focus input</span><kbd>Ctrl+K</kbd></div>
+                <div class="shortcut-row"><span>Send message</span><kbd>Enter</kbd></div>
+                <div class="shortcut-row"><span>New line</span><kbd>Shift+Enter</kbd></div>
+                <div class="shortcut-row"><span>New chat tab</span><kbd>Ctrl+N</kbd></div>
+                <div class="shortcut-row"><span>Export chat</span><kbd>Ctrl+E</kbd></div>
+                <div class="shortcut-row"><span>Search chat</span><kbd>Ctrl+F</kbd></div>
+                <div class="shortcut-row"><span>Msg history</span><kbd>Ctrl+&#8593;&#8595;</kbd></div>
+                <div class="shortcut-row"><span>Dismiss</span><kbd>Esc</kbd></div>
+            </div>
+        </aside>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

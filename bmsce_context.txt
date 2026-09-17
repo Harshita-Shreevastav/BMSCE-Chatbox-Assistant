@@ -1,0 +1,188 @@
+BMSCE - BMS COLLEGE OF ENGINEERING COMPLETE REFERENCE DATA
+==========================================================
+Source: bmsce.ac.in (scraped 2025)
+Location: Bull Temple Road, Basavanagudi, Bengaluru - 560019, Karnataka, India
+Phone: 080-26622130/31/32/33/34/35 | Fax: +91-80-26614357
+Email: info@bmsce.ac.in | Website: bmsce.ac.in
+Founded: 1946 | Affiliation: VTU | Autonomous | NAAC 'A' Grade | NBA Accredited
+
+============ ADMINISTRATION ============
+Principal: Dr. Bheemsha Arya (principal@bmsce.ac.in)
+Director, BMSET: Wg Cdr R A Raghavan (R) (director.admin@bmsce.ac.in)
+Vice Principal - Academic: Dr. L. Ravikumar (viceprincipal@bmsce.ac.in)
+Vice Principal - Admin: Dr. Seshachalam D (viceprincipal.adm@bmsce.ac.in)
+Dean - Academic: (dean.academic@bmsce.ac.in)
+Dean - Student Affairs: Dr. Rajeswari Hegde (dean.studentaffairs@bmsce.ac.in)
+Dean - Innovation: Dr. Savithri Bhat (dean.innovation@bmsce.ac.in)
+Dean (FYB - First Year Block): Dr. S.B. Bhanu Prashanth (dean.fyb@bmsce.ac.in)
+Dean, Training & Placement: Dr. J. Sharana Basavaraj (placement@bmsce.ac.in)
+Controller of Examination (COE): (coe@bmsce.ac.in)
+
+============ DEPARTMENTS & HODs ============
+
+1. Computer Science & Engineering (CSE) - Est. 1984
+   HOD: Dr. Kavitha Sooda, Professor & Head
+   Faculty: Dr. H S Guruprasad, Dr. G Varaprasad, Dr. M Indiramma, Dr. Jyothi S Nayak,
+            Dr. B G Prasad, Dr. M V Sudhamani, Dr. P Jayarekha, Dr. Pallavi G B, Dr. Radhika K R, Dr. Umadevi V
+   URL: bmsce.ac.in/home/Computer-Science-and-Engineering-About
+
+2. Machine Learning / AI & ML - Est. 2020
+   HOD: Dr. M Dakshayini, Professor & Head
+   Intake: 360 students
+   Faculty: Dr. Gowrishankar, Amitha S, Asha G, Bhavyashree H L, Dr. Jahnavi S,
+            Dr. Vinutha H, Kusha K R, Pallavi B, Shridevi A Desai, Soniya L, Spoorthi G S
+   Center of Excellence: B.S. Narayan Center of Excellence in AI & ML (NVIDIA DGX A100 server)
+   Contact: jahnavis.mel@bmsce.ac.in, vinuthah.mel@bmsce.ac.in
+   URL: bmsce.ac.in/home/Machine-Learning-AI-and-ML-About
+
+3. Information Science & Engineering (ISE) - Est. 1987
+   HOD: Dr. M K Nalini, Associate Professor & Head
+   Intake: 267 students (2023)
+   M.Tech & Research Center started 2011
+   URL: bmsce.ac.in/home/Information-Science-and-Engineering-About
+
+4. Electronics & Communication Engineering (ECE) - Est. 1971
+   HOD: Dr. K. P. Lakshmi, Professor & Head
+   Research center under QIP; focuses on Outcome-Based Education
+   URL: bmsce.ac.in/home/Electronics-and-Communication-Engineering-About
+
+5. Electrical & Electronics Engineering (EEE) - Est. 1946
+   HOD: Dr. R. S. Geetha, Professor & Head
+   One of the oldest departments; hosts symposia like Blitzkrieg and E^3
+   URL: bmsce.ac.in/home/Electrical-and-Electronics-Engineering-About
+
+6. Mechanical Engineering - Est. 1946
+   HOD: Dr. H. M. Shivaprasad, Associate Professor & Head
+   M.Tech in Machine Design since 1985; NBA Tier-I accredited
+   URL: bmsce.ac.in/home/Mechanical-Engineering-About
+
+7. Civil Engineering - Est. 1946
+   HOD: Dr. Sureka Naagesh, Professor & Head
+   NBA Tier-I accredited in 2022; hosts AICTE QIP Research center
+   URL: bmsce.ac.in/home/Civil-Engineering-About
+
+8. Aerospace Engineering - Est. 2018
+   HOD: Dr. K. Veerabhadrappa, Professor & HOD
+   Intake: 60; first batch graduated in 2022
+   URL: bmsce.ac.in/home/Aerospace-Engineering-About
+
+9. Artificial Intelligence & Data Science (AI&DS) - Est. 2022
+   HOD: Dr. Indiramma M, Professor & HoD
+   Intake: 60; focuses on industry collaboration in AI domain
+   URL: bmsce.ac.in/home/Artificial-Intelligence-and-Data-Science-About
+
+10. Electronics & Telecommunication Engineering (E&TE)
+    URL: bmsce.ac.in/home/Electronics-and-Telecommunication-Engineering-About
+
+11. Electronics & Instrumentation Engineering (E&I)
+    URL: bmsce.ac.in/home/Electronics-and-Instrumentation-Engineering-About
+
+12. Medical Electronics Engineering
+    URL: bmsce.ac.in/home/Medical-Electronics-Engineering-About
+
+13. Chemical Engineering
+    URL: bmsce.ac.in/home/Chemical-Engineering-About
+
+14. Bio-Technology
+    URL: bmsce.ac.in/home/Bio-Technology-About
+
+15. Industrial Engineering & Management (IEM)
+    URL: bmsce.ac.in/home/Industrial-Engineering-and-Management-About
+
+16. CSE (Data Science) - URL: bmsce.ac.in/home/Computer-Science-and-Engineering-DS-About
+17. CSE (IoT & Cyber Security) - URL: bmsce.ac.in/home/Computer-Science-and-Engineering-IoT-and-CS-About
+18. Computer Science & Business Systems (CSBS) - URL: bmsce.ac.in/home/Computer-Science-and-Business-Systems-About
+
+19. Computer Applications (MCA) - URL: bmsce.ac.in/home/Computer-Applications-MCA-About
+20. Management Studies (MBA) - URL: bmsce.ac.in/home/Management-Studies-and-Research-Centre-About
+21. Mathematics Dept - URL: bmsce.ac.in/home/Mathematics-Department-About
+22. Physics Dept - URL: bmsce.ac.in/home/Physics-Department-About
+23. Chemistry Dept - URL: bmsce.ac.in/home/Chemistry-Department-About
+
+============ STUDENT ACTIVITIES ============
+Co-Curricular: bmsce.ac.in/home/Co---Curricular-Activities
+Extra-Curricular: bmsce.ac.in/home/Extra-Curricular-Activities
+Dean Student Affairs: Dr. Rajeswari Hegde (bmsce.ac.in/home/Dean-Student-Affairs-Desk)
+Clubs: BMSCE IEEE, Vahini (PR Cell), Rotaract Club, BMSCE Upagraha,
+       Inksanity (literary), Pravrutthi (theatre), ACM Chapter,
+       Coding Club, Drone Club, IoT Club, Robotics Club, Electronics Club, Mountaineering Club
+Activities: NSS, NCC, Niranthara, GIAN, Phase Shift (tech fest), Utsav (cultural fest)
+Counselling Center: bmsce.ac.in/home/Counselling-Center
+DASC (Differently Abled Service Cell): bmsce.ac.in/home/Differently-Abled-Service-Cell-DASC
+
+============ INNOVATION & LABS ============
+CIIE: Centre for Innovation, Incubation & Entrepreneurship
+IIC: Institution Innovation Council
+Big Foundation | Idea Lab
+Bullz Racing: Formula Student team (Propel Lab-4)
+Skill Labs: Product Innovation Lab, 3D Printing Lab, Aerospace Propel Lab,
+            Robotics & Embedded Systems Propel Lab, IoT Lab, Polymer Composites Lab,
+            B.S. Narayan Center for Nano-Materials & Displays,
+            B.S. Narayan Center of Excellence in AI & ML,
+            Centre of Excellence in Photovoltaic Systems,
+            B.S. Narayan Centre for Structural Integrity
+
+============ FACILITIES ============
+BMS Hospital: On-campus (bmsce.ac.in/home/BMS-Hospital)
+Library: Central Library with digital resources (bmsce.ac.in/home/About-Library)
+Hostels: Boys & Girls hostels (bmsce.ac.in/home/About-BMSET-Hostels)
+Data Center: High-speed Wi-Fi campus (bmsce.ac.in/home/About-Data-Center)
+Sports: Majestic Indoor Stadium, gym, outdoor grounds (bmsce.ac.in/home/About-Sports)
+NO swimming pool on campus.
+
+============ PLACEMENTS 2024-25 ============
+Highest Package: 51.5 LPA (2025) | 38 LPA (2024)
+Average Package: 11.4 LPA (2025) | 9.8 LPA (2024)
+Companies visited: 383+ (2025) | 347 (2024)
+Students placed: 968 (2025) | 989 (2024)
+Total Offers: 1307 (2025) | 1180 (2024)
+Top Recruiters: Amazon, IBM, Accenture and major tech companies
+Dean T&P: Dr. J. Sharana Basavaraj
+
+============ FESTS ============
+Utsav: Annual Techno-Cultural Festival (May). 2025 theme: "Ananta"
+Phase Shift: International Technical Symposium. 2024: Dec 5-6 "Resurgence". 2025: Sept 19-20 "Meridian"
+
+============ ADMISSIONS ============
+KCET: Government quota (~50%), check cetonline.karnataka.gov.in
+COMEDK: Private quota, CSE closing rank ~3000-4000, check comedk.org
+Management Quota: Higher fees, limited seats
+UG: bmsce.ac.in/home/Under-Graduation
+PG: bmsce.ac.in/home/Post-Graduation
+PhD: bmsce.ac.in/home/PhD
+International: bmsce.ac.in/home/International-Admissions
+
+============ FEES (2024-25 estimates) ============
+KCET CSE: ~88,000 - 90,000/year
+COMEDK CSE: ~3,01,000/year + misc
+Management CSE: ~10-15 Lakhs/year
+Hostel: ~2,19,000 - 2,27,000/year (incl. mess)
+Mess Veg: ~73,500/year | Non-Veg: ~79,000/year
+
+============ HOSTEL ============
+Curfew: Boys 9:30 PM (weekdays), 10:30 PM (Sat) | Girls 8:30 PM / 9:30 PM
+Gates reopen: 5:30 AM
+Mess: Breakfast 7:30-9 AM | Lunch 12:30-2 PM | Snacks 4:30-5:30 PM | Dinner 7:30-9 PM
+Facilities: Wi-Fi, gym, study rooms, laundry, common room
+
+============ LIBRARY ============
+Stack/Circulation: Mon-Sat 9:30 AM - 5:00 PM
+Reference Section: Mon-Sat 9:30 AM - 8:30 PM | Sunday 9:30 AM - 4:30 PM
+Digital: NPTEL, IEEE Xplore, Springer. College ID mandatory.
+
+============ ATTENDANCE & DRESS CODE ============
+Attendance: 85% minimum mandatory. Below = barred from exams.
+Dress Code: No uniform. Appropriate/presentable attire expected. No shorts/beachwear. ID card mandatory.
+
+============ RESEARCH ============
+R&D: bmsce.ac.in/home/About-R-and-D
+Research Centers | Innovative Labs | Funded Projects
+B.S. Narayan PhD Fellowship
+Journal Publications | Patents Filed
+IRINS Portal: bmsce.irins.org
+
+============ DOCUMENTS & ACCREDITATION ============
+NAAC Cycle III | NBA | NIRF | ARIIA | AICTE
+Scholarships: bmsce.ac.in/home/Scholarships
+Rules: bmsce.ac.in/home/Rules-and-Regulations
+Grievance Cell | SC/ST/OBC Cell | Women Cell Committee
