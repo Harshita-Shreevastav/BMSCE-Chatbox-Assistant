@@ -46,6 +46,38 @@ else:
     SUPABASE_HEADERS = None
     print("[!] Supabase URL or Key missing from .env")
 
+# ======================== KNOWLEDGE BASE SETUP ========================
+from knowledge_base import KNOWLEDGE_BASE as LOCAL_KB, CONTRADICTION_GROUPS as LOCAL_CONTRADICTIONS
+
+knowledge_base = list(LOCAL_KB)
+contradiction_groups_map = dict(LOCAL_CONTRADICTIONS)
+
+def init_kb():
+    global knowledge_base, contradiction_groups_map
+    if SUPABASE_HEADERS:
+        try:
+            r = requests.get(f"{supabase_url}/rest/v1/kb_entries?select=*", headers=SUPABASE_HEADERS, timeout=4)
+            if r.status_code == 200:
+                supa_data = r.json()
+                if supa_data:
+                    merged = {e["id"]: e for e in LOCAL_KB}
+                    for e in supa_data:
+                        merged[e["id"]] = e
+                    knowledge_base = list(merged.values())
+                    print(f"[+] Loaded {len(knowledge_base)} knowledge base entries (Supabase + Local)")
+        except Exception as e:
+            print(f"[!] Could not fetch from Supabase, using local KB: {e}")
+
+        try:
+            r = requests.get(f"{supabase_url}/rest/v1/contradiction_groups?select=*", headers=SUPABASE_HEADERS, timeout=4)
+            if r.status_code == 200:
+                for g in r.json():
+                    contradiction_groups_map[g["group_name"]] = g.get("entry_ids", [])
+        except Exception:
+            pass
+
+init_kb()
+
 app = Flask(__name__)
 CORS(app)
 
@@ -224,28 +256,165 @@ def compute_score(query_tokens, query_str, entry, detected_intent, fuzzy_tokens)
 
 
 def find_contradiction_group(entry_id):
-    """Check if an entry belongs to a contradiction group."""
-    if not SUPABASE_HEADERS: return None, []
-    try:
-        r = requests.get(f"{supabase_url}/rest/v1/contradiction_groups?select=*", headers=SUPABASE_HEADERS)
-        if r.status_code == 200:
-            groups = r.json()
-            for group in groups:
-                if entry_id in group.get("entry_ids", []):
-                    return group["group_name"], group["entry_ids"]
-    except Exception as e:
-        app.logger.error(f"[!] Failed to fetch contradiction groups: {e}")
+    """Check if an entry belongs to a contradiction group using cached map."""
+    for group_name, entry_ids in contradiction_groups_map.items():
+        if entry_id in entry_ids:
+            return group_name, entry_ids
     return None, []
+
+
+def get_conversational_response(query):
+    """
+    Detect and return friendly, institutional responses for greetings,
+    chit-chat, identity, and general polite phrases.
+    """
+    if not query:
+        return None
+
+    q_lower = query.lower().strip()
+    q_clean = re.sub(r'[^\w\s]', ' ', q_lower).strip()
+    words = q_clean.split()
+    if not words:
+        return None
+
+    # Common greetings
+    greetings = {"hi", "hello", "hey", "hii", "hiii", "heyy", "heyyy", "yo", "hola", "sup", "howdy", "greetings"}
+    domain_terms = {"fee", "fees", "hostel", "placement", "placements", "canteen", "club", "clubs", 
+                    "admission", "admissions", "attendance", "exam", "branch", "cutoff", "cutoffs",
+                    "library", "sports", "gym", "hod", "faculty", "dean", "utsav", "phase"}
+
+    # Pure greeting check
+    if q_clean in greetings or (len(words) <= 3 and any(w in greetings for w in words) and not any(w in domain_terms for w in words)):
+        return {
+            "response": (
+                "Hello! 👋 Welcome to the BMSCE Campus Assistant.\n\n"
+                "How can I help you today? You can ask me about:\n"
+                "• 🏆 Student Clubs & Extracurriculars\n"
+                "• 🍽️ Campus Canteens, Menus & Timings\n"
+                "• 💼 Placements & Top Recruiters\n"
+                "• 🏢 Hostels & Campus Facilities\n"
+                "• 📚 Library & Attendance Regulations\n"
+                "• 📝 Admissions & Cutoffs"
+            ),
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "greeting"
+        }
+
+    # Time of day
+    if "good morning" in q_clean:
+        return {
+            "response": "Good morning! ☀️ Hope you have a wonderful and productive day at BMSCE. What questions can I answer for you?",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "greeting"
+        }
+    if "good afternoon" in q_clean:
+        return {
+            "response": "Good afternoon! 🌤️ How can I assist you with BMS College of Engineering queries today?",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "greeting"
+        }
+    if "good evening" in q_clean:
+        return {
+            "response": "Good evening! 🌙 What would you like to know about BMSCE campus life or academics?",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "greeting"
+        }
+    if "good night" in q_clean:
+        return {
+            "response": "Good night! 🌙 Rest well. Feel free to come back anytime you need BMSCE info!",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "greeting"
+        }
+
+    # How are you / What's up
+    if any(phrase in q_clean for phrase in ["how are you", "how are u", "how r u", "how you doing", "how are you doing", "hows it going"]):
+        return {
+            "response": "I'm doing great, thank you for asking! 😊 Ready to help you with anything about BMS College of Engineering. What would you like to explore?",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "greeting"
+        }
+    if any(phrase in q_clean for phrase in ["whats up", "what's up", "wassup", "what is up"]):
+        return {
+            "response": "All good here! Ready to help you with BMSCE placements, admissions, canteens, hostels, or clubs. What's on your mind?",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "greeting"
+        }
+
+    # Identity / Bot info
+    if any(phrase in q_clean for phrase in ["who are you", "what are you", "what is your name", "whats your name", "who created you", "who made you"]):
+        return {
+            "response": (
+                "I am the **BMSCE AI Campus Assistant** 🎓, designed for BMS College of Engineering, Bangalore.\n\n"
+                "I assist students, parents, and visitors with verified facts on courses, admissions, canteens, hostels, attendance rules, and campus facilities."
+            ),
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "about"
+        }
+
+    # Help / Capabilities
+    if q_clean in {"help", "what can you do", "features", "options", "commands"}:
+        return {
+            "response": (
+                "Here are some popular questions you can ask me:\n\n"
+                "• *'Which is the best club in BMSCE?'*\n"
+                "• *'What are the canteen timings and prices?'*\n"
+                "• *'What is the highest placement package for CSE?'*\n"
+                "• *'What is the attendance criteria?'*\n"
+                "• *'What are the hostel fees and food options?'*\n"
+                "• *'Tell me about Utsav and Phase Shift fests.'*\n\n"
+                "Or simply type any question in your mind!"
+            ),
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "help"
+        }
+
+    # Gratitude
+    if any(w in words for w in ["thanks", "thank", "thx", "tysm", "appreciate"]):
+        return {
+            "response": "You're very welcome! 😊 Glad I could help. Let me know if you need anything else regarding BMSCE.",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "acknowledgment"
+        }
+
+    # Farewell
+    if any(w in words for w in ["bye", "goodbye", "cya"]) or "see you" in q_clean:
+        return {
+            "response": "Goodbye! Have a great time at BMSCE! Feel free to reach out anytime. 👋",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "farewell"
+        }
+
+    # Short affirmations
+    if q_clean in {"ok", "okay", "cool", "nice", "great", "awesome", "got it", "understood", "sure"}:
+        return {
+            "response": "Great! Feel free to ask anytime whenever you need info about BMSCE. 🎓",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
+            "category": "acknowledgment"
+        }
+
+    return None
 
 
 def search(query):
     """
-    Main search function with smart matching.
-    1. Removes stop words
-    2. Detects intent from phrase patterns
-    3. Applies fuzzy correction for typos
-    4. Scores all entries and returns best match
-    5. Shows multiple perspectives for contradictory topics
+    Main search function with smart matching over the in-memory knowledge base.
+    1. Checks conversational greetings
+    2. Removes stop words
+    3. Detects intent from phrase patterns
+    4. Applies fuzzy correction for typos
+    5. Scores all entries and returns best match or contradiction response
     """
     query_lower = query.lower().strip()
     query_clean = re.sub(r'[^\w\s]', ' ', query_lower)
@@ -254,32 +423,23 @@ def search(query):
     if not query_tokens:
         return {
             "response": "Please ask me something about BMSCE! I can help with clubs, canteen, placements, hostels, and more.",
-            "trust_level": 0,
-            "source": "System",
+            "trust_level": 1,
+            "source": "BMSCE Assistant",
             "category": "general"
         }
+
+    # Check conversational pleasantries first
+    conv = get_conversational_response(query)
+    if conv:
+        return conv
 
     # Step 1: Remove stop words for better signal
     meaningful_tokens = remove_stop_words(query_tokens)
     if not meaningful_tokens:
-        meaningful_tokens = query_tokens  # fallback if all words are stop words
+        meaningful_tokens = query_tokens
 
     # Step 2: Detect intent from raw query
     detected_intent = detect_intent(query_clean)
-
-    # Fetch Knowledge Base from Supabase
-    if not SUPABASE_HEADERS:
-        knowledge_base = []
-    else:
-        try:
-            r = requests.get(f"{supabase_url}/rest/v1/kb_entries?select=*", headers=SUPABASE_HEADERS)
-            if r.status_code == 200:
-                knowledge_base = r.json()
-            else:
-                knowledge_base = []
-        except Exception as e:
-            app.logger.error(f"[!] Failed to fetch data from Supabase: {e}")
-            knowledge_base = []
 
     # Step 3: Build vocabulary for fuzzy matching
     all_keywords = set()
@@ -299,29 +459,11 @@ def search(query):
 
     scored.sort(key=lambda x: x[0], reverse=True)
 
-    # Debug: log top matches for troubleshooting
-    if scored:
-        top3 = scored[:3]
-        print(f"[Search] Query: '{query_clean}' | Top match: '{top3[0][1]['id']}' (score={top3[0][0]})")
-    else:
-        print(f"[Search] Query: '{query_clean}' | No matches found")
-
-    # MINIMUM SCORE THRESHOLD - prevents returning wrong low-confidence matches
-    # Raised to 40 to ensure only strong matches return local KB answers
-    # Weak matches (e.g. "HOD of AIML" matching "about_bmsce" by keyword "department")
-    # should fall through to Gemini for a proper AI answer
-    MINIMUM_SCORE_THRESHOLD = 40
+    # MINIMUM SCORE THRESHOLD
+    MINIMUM_SCORE_THRESHOLD = 30
 
     if not scored or scored[0][0] < MINIMUM_SCORE_THRESHOLD:
-        return {
-            "response": (
-                "I don't have specific information about that in my local knowledge base. "
-                "Let me search for an answer..."
-            ),
-            "trust_level": 0,
-            "source": "System",
-            "category": "general"
-        }
+        return None
 
     best_score, best_entry = scored[0]
 
@@ -457,7 +599,7 @@ def ask_gemini(user_message):
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    """Main chat endpoint. Tries local KB first, falls back to Gemini API."""
+    """Main chat endpoint. Handles conversational pleasantries, local KB, web search, and AI fallback."""
     data = request.get_json()
     if not data or "message" not in data:
         return jsonify({"error": "Please send a JSON body with 'message' field"}), 400
@@ -466,53 +608,63 @@ def chat():
     if not user_message:
         return jsonify({"error": "Message cannot be empty"}), 400
 
+    # 1. Fast conversational check (hi, hello, how are you, who are you, etc.)
+    conversational = get_conversational_response(user_message)
+    if conversational:
+        return jsonify(conversational)
+
+    # 2. Knowledge base search
     result = search(user_message)
+    if result:
+        return jsonify(result)
 
-    # If local search returned low-confidence match, try Gemini
-    if result.get("source") == "System" and result.get("trust_level") == 0:
-        # 1. Try dynamic web scraping
-        try:
-            from web_scraper import web_scrape_for_answer
-            scraped_answer, source_url = web_scrape_for_answer(user_message, gemini_model if GEMINI_AVAILABLE else None)
+    # 3. Dynamic web search fallback
+    try:
+        from web_scraper import web_scrape_for_answer
+        scraped_answer, source_url = web_scrape_for_answer(user_message, gemini_model if GEMINI_AVAILABLE else None)
+        
+        if scraped_answer:
+            import uuid
+            new_entry = {
+                "id": f"dynamic_{uuid.uuid4().hex[:8]}",
+                "question": user_message,
+                "answer": scraped_answer,
+                "source": source_url,
+                "trust_level": 3,
+                "category": "dynamic_web",
+                "keywords": [w for w in user_message.lower().split() if w not in STOP_WORDS and len(w) > 2],
+                "intents": [],
+                "controversial": False
+            }
+            # Append in-memory
+            knowledge_base.append(new_entry)
+            if SUPABASE_HEADERS:
+                try:
+                    requests.post(f"{supabase_url}/rest/v1/kb_entries", json=new_entry, headers=SUPABASE_HEADERS, timeout=2)
+                except Exception:
+                    pass
             
-            if scraped_answer:
-                import uuid
-                new_entry = {
-                    "id": f"dynamic_{uuid.uuid4().hex[:8]}",
-                    "question": user_message,
-                    "answer": scraped_answer,
-                    "source": source_url,
-                    "trust_level": 3,
-                    "category": "dynamic_web",
-                    "keywords": [w for w in user_message.lower().split() if w not in STOP_WORDS and len(w) > 2],
-                    "intents": [],
-                    "controversial": False
-                }
-                if SUPABASE_HEADERS:
-                    try:
-                        r = requests.post(f"{supabase_url}/rest/v1/kb_entries", json=new_entry, headers=SUPABASE_HEADERS)
-                        if r.status_code in (200, 201, 204):
-                            print(f"[+] Dynamically appended new answer to Supabase: {new_entry['id']}")
-                        else:
-                            print(f"[!] Failed to insert dynamic entry: {r.text}")
-                    except Exception as e:
-                        print(f"[!] Failed to insert dynamic entry: {e}")
-                
-                return jsonify({
-                    "response": f"[Web Search]\n\n{scraped_answer}\n\n(Source: {source_url})",
-                    "trust_level": 3,
-                    "source": source_url,
-                    "category": "dynamic_web"
-                })
-        except Exception as e:
-            app.logger.error(f"[!] Web scraping integration error: {e}")
+            return jsonify({
+                "response": f"[Web Search]\n\n{scraped_answer}\n\n(Source: {source_url})",
+                "trust_level": 3,
+                "source": source_url,
+                "category": "dynamic_web"
+            })
+    except Exception as e:
+        app.logger.error(f"[!] Web scraping integration error: {e}")
 
-        # 2. Fall back to general Gemini
-        gemini_result = ask_gemini(user_message)
-        if gemini_result:
-            return jsonify(gemini_result)
+    # 4. Fall back to general Gemini if available
+    gemini_result = ask_gemini(user_message)
+    if gemini_result:
+        return jsonify(gemini_result)
 
-    return jsonify(result)
+    # 5. Default reliable institutional fallback
+    return jsonify({
+        "response": "Please refer to the official BMSCE website at bmsce.ac.in or contact the administration office.",
+        "trust_level": 1,
+        "source": "BMSCE Official",
+        "category": "not_found"
+    })
 
 
 
