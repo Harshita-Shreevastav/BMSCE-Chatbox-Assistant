@@ -1,4 +1,4 @@
-# 🎓 BMSCE AI Chatbot Assistant
+#  BMSCE AI Chatbot Assistant
 > An intelligent, hybrid campus chatbot assistant for **BMS College of Engineering (BMSCE), Bangalore**. Features multi-tier knowledge retrieval, fuzzy keyword matching, contradiction resolution, live web search, and Gemini AI fallback.
 
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
@@ -9,7 +9,7 @@
 
 ---
 
-## 📌 Overview
+##  Overview
 
 The **BMSCE AI Chatbot** is designed to provide students, faculty, and prospective applicants with fast, reliable, and verified answers regarding BMS College of Engineering. 
 
@@ -21,14 +21,14 @@ Rather than relying purely on generative AI hallucinations, the assistant utiliz
 
 ---
 
-## ✨ Features
+##  Features
 
 - **🛡️ Multi-Level Trust Scoring**:
   - `Official` (Green): Direct information from college administration and circulars.
   - `Verified` (Yellow): Fact-checked student data & guidelines.
   - `Student Opinion` (Red/Orange): Subjective community perspectives.
   - `Dynamic Web` (Purple): Live search results synthesized from official domain/web.
-- **🔍 Smart Fuzzy Matching**: Handles student typos (`attandance strict`, `canteen timmings`) seamlessly via `difflib` and keyword token scoring.
+- ** Smart Fuzzy Matching**: Handles student typos (`attandance strict`, `canteen timmings`) seamlessly via `difflib` and keyword token scoring.
 - **⚡ Desktop-Optimized 3-Column UI**:
   - Left navigation & quick topic filters
   - Main interactive conversation feed
@@ -63,7 +63,7 @@ Rather than relying purely on generative AI hallucinations, the assistant utiliz
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```bash
 BMSCE-Chatbox-Assistant/
@@ -86,7 +86,7 @@ BMSCE-Chatbox-Assistant/
 
 ---
 
-## 🚀 Quick Start (Local Setup)
+##  Quick Start (Local Setup)
 
 ### 1. Clone the repository
 ```bash
@@ -127,7 +127,7 @@ Open your browser and navigate to **`http://localhost:5000`**.
 
 ---
 
-## 🌐 Cloud Deployment (Render.com)
+##  Cloud Deployment (Render.com)
 
 1. Fork or push this repository to GitHub.
 2. Sign in to [Render](https://render.com/) and click **New +** → **Web Service**.
@@ -144,7 +144,7 @@ Open your browser and navigate to **`http://localhost:5000`**.
 
 ---
 
-## 🧪 Sample Queries to Try
+##  Sample Queries to Try
 
 - `"which is the best club?"` ➔ Displays IEEE BMSCE and club profiles.
 - `"canteen timings"` ➔ Covers all 4 campus canteens and timings.
@@ -153,6 +153,3 @@ Open your browser and navigate to **`http://localhost:5000`**.
 - `"highest package cse"` ➔ Displays BMSCE placement statistics & top recruiters.
 
 ---
-
-## 📄 License
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
