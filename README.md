@@ -23,17 +23,17 @@ Rather than relying purely on generative AI hallucinations, the assistant utiliz
 
 ##  Features
 
-- ** Multi-Level Trust Scoring**:
+- **Multi-Level Trust Scoring**:
   - `Official` (Green): Direct information from college administration and circulars.
   - `Verified` (Yellow): Fact-checked student data & guidelines.
   - `Student Opinion` (Red/Orange): Subjective community perspectives.
   - `Dynamic Web` (Purple): Live search results synthesized from official domain/web.
-- ** Smart Fuzzy Matching**: Handles student typos (`attandance strict`, `canteen timmings`) seamlessly via `difflib` and keyword token scoring.
+- **Smart Fuzzy Matching**: Handles student typos (`attandance strict`, `canteen timmings`) seamlessly via `difflib` and keyword token scoring.
 - ** Desktop-Optimized 3-Column UI**:
   - Left navigation & quick topic filters
   - Main interactive conversation feed
   - Right sidebar with campus widgets, shortcuts, and trust distribution meter
-- ** Power-User Shortcuts**:
+- **Power-User Shortcuts**:
   - `Ctrl + K`: Quick focus chat bar
   - `Ctrl + N`: New chat session
   - `Ctrl + E`: Export conversation to `.txt`
