@@ -1,5 +1,8 @@
 #  BMSCE AI Chatbot Assistant
 > An intelligent, hybrid campus chatbot assistant for **BMS College of Engineering (BMSCE), Bangalore**. Features multi-tier knowledge retrieval, fuzzy keyword matching, contradiction resolution, live web search, and Gemini AI fallback.
+>
+> Live Demo
+> https://bmsce-chatbox-assistant.onrender.com/
 
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-2.x-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
